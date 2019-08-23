@@ -1,5 +1,7 @@
 <template>
     <div id="wrapper">
+        <Toolbar />
+
         <main>
             <div class="left-side">
                 <span class="title">Welcome to your new project!</span>
@@ -23,10 +25,11 @@
 
 <script>
     import { ipcRenderer } from 'electron';
+    import Toolbar from './Toolbar.vue';
 
     export default {
-        name: "root",
-        components: {},
+        name: "Welcome",
+        components: { Toolbar },
         watch: {
             token(val) {
                 console.log(val);
@@ -66,13 +69,15 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  user-select: none;
+  cursor: default;
 }
 
 body {
   font-family: "Source Sans Pro", sans-serif;
 }
 
-#wrapper {
+#wrapper main {
   background: radial-gradient(
     ellipse at top left,
     rgba(255, 255, 255, 1) 40%,
@@ -101,24 +106,6 @@ main > div {
 .left-side {
   display: flex;
   flex-direction: column;
-}
-
-.welcome {
-  color: #555;
-  font-size: 23px;
-  margin-bottom: 10px;
-}
-
-.title {
-  color: #2c3e50;
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 6px;
-}
-
-.title.alt {
-  font-size: 18px;
-  margin-bottom: 10px;
 }
 
 .doc p {
