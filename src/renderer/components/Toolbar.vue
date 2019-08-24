@@ -9,18 +9,18 @@
     import { remote } from 'electron';
 
     export default {
-        name: "main",
         components: {},
-        watch: {
-            
-        },
-        computed: {
-        },
         data() {
             return {
                 remoteWindow: remote.getCurrentWindow()
             }
         },
+        watch: {
+            
+        },
+        computed: {
+        },
+        
         methods: {
 
         }

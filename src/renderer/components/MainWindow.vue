@@ -19,7 +19,6 @@
     import Toggler from './Toggler.vue';
     
     export default {
-        name: "MainWindow",
         components: {
             Toolbar,
             Toggler,    
@@ -55,7 +54,7 @@
     }
 
     .main-window {
-        background: rgba(44, 44, 44, 0.95);
+        background: rgba(44, 44, 44, 0.955);
         
         height: 100vh;
         width: 100vw;
@@ -69,7 +68,7 @@
         flex-direction: column;
         align-items: center;
 
-        border-top: 1px solid #7E7E7E;
+        // border-top: 1px solid #7E7E7E;
     }
 
     .npc-work {

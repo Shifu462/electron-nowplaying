@@ -1,52 +1,53 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron';
+import SteamSettingsManager from './SteamSettingsManager';
 
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
  */
 if (process.env.NODE_ENV !== 'development') {
-  global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\');
+    global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\');
 }
 
-let mainWindow
+let mainWindow;
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`;
 
 function createWindow () {
-  /**
-   * Initial window options
-   */
-  mainWindow = new BrowserWindow({
-    height: 500,
-    useContentSize: true,
-    width: 1000,
-    frame: false,
-    transparent: true,
-  });
+    /**
+     * Initial window options
+     */
+    mainWindow = new BrowserWindow({
+        height: 500,
+        useContentSize: true,
+        width: 1000,
+        frame: false,
+        transparent: true,
+    });
+    mainWindow.on('closed', () => mainWindow = null);
 
-  mainWindow.loadURL(winURL);
+    let steamSettings = SteamSettingsManager.getSettings();
 
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-  })
+    mainWindow.loadURL(winURL);
+
 }
 
 app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
+if (process.platform !== 'darwin') {
     app.quit();
-  }
+}
 })
 
 app.on('activate', () => {
-  if (mainWindow === null) {
-    createWindow();
-  }
+    if (mainWindow === null) {
+        createWindow();
+    }
 })
 
-ipcMain.on('resize-for-main', (e, args) => {
+ipcMain.on('resize-for-main-window', (e, args) => {
     mainWindow.setSize(450, 685);
 })
 

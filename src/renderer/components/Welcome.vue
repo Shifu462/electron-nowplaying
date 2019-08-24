@@ -4,7 +4,12 @@
 
         <main>
             <div class="left-side">
-                <span class="title">Welcome to your new project!</span>
+                <span class="title">Привет!</span>
+                <p>
+                    Чтобы залогиниться, нажми Login, залогинься в спотифае, 
+                    потом скопируй полностью ссылку в текстовое поле. <br />
+                    Это временная мера, пока мне впадлу делать нормально.
+                </p>
             </div>
 
             <div class="right-side">
@@ -14,10 +19,6 @@
                     <input type="text" v-model="token"/>
                     <button class="alt" @click="open(tokenUrl)">Login</button>
                 </div>
-                <div class="doc">
-                <button class="alt" @click="open('https://electron.atom.io/docs/')">Electron</button>
-                <button class="alt" @click="open('https://vuejs.org/v2/guide/')">Vue.js</button>
-            </div>
             </div>
         </main>
     </div>
@@ -28,7 +29,6 @@
     import Toolbar from './Toolbar.vue';
 
     export default {
-        name: "Welcome",
         components: { Toolbar },
         watch: {
             token(val) {
@@ -40,7 +40,7 @@
                     console.log(code);
 
                     this.$router.push('/main');
-                    ipcRenderer.send('resize-for-main');
+                    ipcRenderer.send('resize-for-main-window');
                 }
             }
         },
