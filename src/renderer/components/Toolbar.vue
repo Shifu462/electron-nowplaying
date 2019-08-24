@@ -5,10 +5,11 @@
     </header>
 </template>
 
-<script>
+<script lang="ts">
     import { remote } from 'electron';
+    import { Vue, Component } from 'vue-property-decorator';
 
-    export default {
+    @Component( {
         components: {},
         data() {
             return {
@@ -24,12 +25,15 @@
         methods: {
 
         }
-    };
+    })
+    export default class Toolbar extends Vue {
+
+    }
 </script>
 
-<style lang="scss" scoped>
-    $itemSize: 12px;
-    $itemColor: #B2B2B2;
+<style lang="less" scoped>
+    @itemSize: 12px;
+    @itemColor: #B2B2B2;
 
     .toolbar {
         width: 100%;
@@ -47,15 +51,15 @@
             cursor: pointer;
 
             display: inline-block;
-            width: $itemSize;
-            height: $itemSize;
+            width: @itemSize;
+            height: @itemSize;
             flex-shrink: 0;
             margin-left: 10px;
 
         }
 
         &__minimize {
-            border-bottom: 2px solid $itemColor;
+            border-bottom: 2px solid @itemColor;
         }
 
         &__cross {
@@ -64,9 +68,9 @@
             &::before, &::after {
                 content: '';
                 display: block;
-                width: $itemSize;
+                width: @itemSize;
                 height: 2px;
-                background-color: $itemColor;
+                background-color: @itemColor;
                 
                 position: absolute;
                 top: 5px;

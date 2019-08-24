@@ -14,34 +14,23 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
     import Toolbar from './Toolbar.vue';
     import Toggler from './Toggler.vue';
+    import { Vue, Component } from 'vue-property-decorator';
     
-    export default {
+    @Component({
         components: {
             Toolbar,
             Toggler,    
-        },
-        watch: {
-            
-        },
-        computed: {
-        },
-        data() {
-            return {
-                isTogglerToggled: true,
-            }
-        },
-        methods: {
-
         }
-    };
+    })
+    export default class MainWindow extends Vue {
+        isTogglerToggled = true
+    }
 </script>
 
-<style lang="scss" scoped>
-    @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro");
-
+<style lang="less" scoped>
     * {
         box-sizing: border-box;
         margin: 0;

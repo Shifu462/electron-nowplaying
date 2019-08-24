@@ -1,18 +1,15 @@
-import regedit from 'regedit';
+const regedit = require('regedit');
 
 export default class SteamSettingsManager {
 
-    static constructor() {
-        const vbsDirectory = path.join(path.dirname(electron.remote.app.getPath('exe')), './resources/my-location');
-        regedit.setExternalVBSLocation(vbsDirectory);
-    }
-
     static getSettings() {
+
         const regPath = 'HKCU\\SOFTWARE\\Valve\\Steam';
 
-        regedit.list(regPath, (err, result) => {
+        regedit.list(regPath, (err: any, result: any) => {
             if (err) {
                 // TODO: Не установлен стим.
+                console.log(err);
                 return;
             }
 
@@ -25,4 +22,5 @@ export default class SteamSettingsManager {
             
         });
     }
+
 }

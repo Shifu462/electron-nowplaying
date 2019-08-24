@@ -5,29 +5,26 @@
     </label>
 </template>
 
-<script>
+<script lang="ts">
+    import { Vue, Component, Prop } from 'vue-property-decorator';
 
-    export default {
-        props: {
-            value: { type: Boolean, required: true }
-        },
-        data() {
-            return {
-                isToggled: this.value,
-            }
-        },
-        methods: {
-            onCheckboxClicked(ev) {
-                this.$emit('input', this.isToggled);
-            }
+    @Component({})
+    export default class Toggler extends Vue {
+        @Prop({ type: Boolean, required: true })
+        value!: boolean;
+
+        isToggled = this.value;
+
+        onCheckboxClicked(ev: any) {
+            this.$emit('input', this.isToggled);
         }
     }
 </script>
 
-<style lang="scss" scoped>
-    $greenColor: #1DB954;
-    $darkColor: rgba(44, 44, 44, 0.95);
-    $time: .2s;
+<style lang="less" scoped>
+    @greenColor: #1DB954;
+    @darkColor: rgba(44, 44, 44, 0.95);
+    @time: .2s;
 
     .switch {
         position: relative;
@@ -49,9 +46,9 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: $darkColor;
-        -webkit-transition: $time;
-        transition: $time;
+        background-color: @darkColor;
+        -webkit-transition: @time;
+        transition: @time;
 
         &:before {
             position: absolute;
@@ -60,15 +57,15 @@
             width: 26px;
             left: 4px;
             bottom: 4px;
-            background-color: $darkColor;
+            background-color: @darkColor;
             
-            -webkit-transition: $time;
-            transition: $time;
+            -webkit-transition: @time;
+            transition: @time;
         }
     }
 
     input:checked + .slider {
-        background-color: $greenColor;
+        background-color: @greenColor;
 
         &:before {
             transform: translateX(26px);
@@ -76,7 +73,7 @@
     }
 
     input:focus + .slider {
-        box-shadow: 0 0 1px $greenColor;
+        box-shadow: 0 0 1px @greenColor;
     }
 
     .slider--rounded {

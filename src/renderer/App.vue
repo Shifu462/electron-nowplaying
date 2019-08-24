@@ -4,10 +4,17 @@
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'electron-vue'
-  }
+<script lang="ts">
+    //import { Vue, Component } from 'vue-property-decorator';
+
+    export default {
+        name: "App"
+    }
+    
+    // @Component({})
+    // export default class App extends Vue {
+
+    // }
 </script>
 
 <style>

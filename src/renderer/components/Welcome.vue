@@ -13,71 +13,69 @@
             </div>
 
             <div class="right-side">
-                <div class="doc">
-                    <div class="title">Log in</div>
-
-                    <input type="text" v-model="token"/>
-                    <button class="alt" @click="open(tokenUrl)">Login</button>
-                </div>
+                <input type="text" v-model="token"/>
+                <button class="alt" @click="open(tokenUrl)">Login</button>
             </div>
         </main>
     </div>
 </template>
 
-<script>
-    import { ipcRenderer } from 'electron';
+<script lang="ts">
+    import { remote } from 'electron';
     import Toolbar from './Toolbar.vue';
+    import { Vue, Component, Watch } from 'vue-property-decorator';
+    
+    @Component({
+        components: { Toolbar }
+    })
+    export default class Welcome extends Vue {
+        token = '';
 
-    export default {
-        components: { Toolbar },
-        watch: {
-            token(val) {
-                console.log(val);
+        @Watch('token')
+        onTokenChanged(val: any) {
+            console.log(val);
 
-                let m = val.match(/.+?\/?code=(.+)/);
-                if (m) {
-                    let code = m[1];
-                    console.log(code);
+            let m = val.match(/.+?\/?code=(.+)/);
+            if (m) {
+                let code = m[1];
+                console.log(code);
 
-                    this.$router.push('/main');
-                    ipcRenderer.send('resize-for-main-window');
-                }
-            }
-        },
-        computed: {
-            tokenUrl() {
-                return 'https://accounts.spotify.com/authorize?client_id=7633771350404368ac3e05c9cf73d187&redirect_uri=https://blank.org/&response_type=code&scope=user-read-playback-state';
-            }
-        },
-        data() {
-            return {
-                token: '',
-            }
-        },
-        methods: {
-            open(link) {
-                this.$electron.shell.openExternal(link);
+                remote.getCurrentWindow().setSize(450, 685);
+
+                (this as any).$router.push('/main');
+                
             }
         }
-    };
+
+        get tokenUrl() {
+            return 'https://accounts.spotify.com/authorize?client_id=7633771350404368ac3e05c9cf73d187&redirect_uri=https://blank.org/&response_type=code&scope=user-read-playback-state';
+        }
+
+        open(link: string) {
+            this.$electron.shell.openExternal(link);
+        }
+    }
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro");
+    @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro");
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  user-select: none;
-  cursor: default;
-}
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        user-select: none;
+        cursor: default;
+    }
 
-body {
-  font-family: "Source Sans Pro", sans-serif;
-}
+    body {
+        font-family: "Source Sans Pro", sans-serif;
+    }
+</style>
 
-#wrapper main {
+<style lang="less" scoped>
+
+#wrapper > main {
   background: radial-gradient(
     ellipse at top left,
     rgba(255, 255, 255, 1) 40%,
@@ -86,15 +84,7 @@ body {
   height: 100vh;
   padding: 60px 80px;
   width: 100vw;
-}
 
-#logo {
-  height: auto;
-  margin-bottom: 20px;
-  width: 420px;
-}
-
-main {
   display: flex;
   justify-content: space-between;
 }
@@ -108,12 +98,12 @@ main > div {
   flex-direction: column;
 }
 
-.doc p {
+p {
   color: black;
   margin-bottom: 10px;
 }
 
-.doc button {
+button {
   font-size: 0.8em;
   cursor: pointer;
   outline: none;
@@ -125,10 +115,11 @@ main > div {
   transition: all 0.15s ease;
   box-sizing: border-box;
   border: 1px solid #4fc08d;
-}
-
-.doc button.alt {
   color: #42b983;
   background-color: transparent;
+}
+
+button.alt {
+  
 }
 </style>
